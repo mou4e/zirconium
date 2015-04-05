@@ -333,20 +333,6 @@ bool FileSystemPolicy::QueryAttributesFileAction(
   return true;
 }
 
-bool FileSystemPolicy::QueryFullAttributesFileAction(
-    EvalResult eval_result,
-    const ClientInfo& client_info,
-    const base::string16 &file,
-    uint32 attributes,
-    FILE_NETWORK_OPEN_INFORMATION* file_info,
-    NTSTATUS* nt_status) {
-  // The only action supported is ASK_BROKER which means query the requested
-  // file as specified.
-  if (ASK_BROKER != eval_result) {
-    *nt_status = STATUS_ACCESS_DENIED;
-    return true;
-  }
-
   NtQueryFullAttributesFileFunction NtQueryFullAttributesFile = NULL;
   ResolveNTFunctionPtr("NtQueryFullAttributesFile", &NtQueryFullAttributesFile);
 
