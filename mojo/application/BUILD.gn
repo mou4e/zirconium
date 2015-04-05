@@ -1,0 +1,50 @@
+# Copyright 2014 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# GYP version: mojo/mojo_base.gyp:mojo_application_chromium
+source_set("application") {
+  sources = [
+    "application_runner_chromium.cc",
+    "application_runner_chromium.h",
+  ]
+
+  public_deps = [
+    "//third_party/mojo/src/mojo/public/cpp/application",
+  ]
+  deps = [
+    "//base",
+    "//mojo/common",
+    "//mojo/environment:chromium",
+  ]
+}
+
+source_set("content_handler") {
+  sources = [
+    "content_handler_factory.cc",
+    "content_handler_factory.h",
+  ]
+  deps = [
+    ":application",
+    "//base",
+    "//mojo/common",
+    "//mojo/environment:chromium",
+    "//third_party/mojo/src/mojo/public/interfaces/application",
+    "//third_party/mojo_services/src/content_handler/public/interfaces",
+    "//mojo/services/network/public/interfaces",
+  ]
+}
+
+source_set("test_support") {
+  testonly = true
+  sources = [
+    "application_test_main_chromium.cc",
+  ]
+
+  public_deps = [
+    "//third_party/mojo/src/mojo/public/cpp/application:test_support",
+  ]
+  deps = [
+    "//base",
+  ]
+}

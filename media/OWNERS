@@ -1,0 +1,10 @@
+dalecurtis@chromium.org
+ddorwin@chromium.org
+jrummell@chromium.org
+sandersd@chromium.org
+scherkus@chromium.org
+wolenetz@chromium.org
+xhwang@chromium.org
+
+per-file *.isolate=csharp@chromium.org
+per-file *.isolate=maruel@chromium.org

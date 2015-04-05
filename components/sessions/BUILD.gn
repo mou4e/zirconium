@@ -1,0 +1,106 @@
+# Copyright 2014 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+if (is_android) {
+  import("//build/config/android/config.gni")
+}
+
+# TODO(rohitrao): sessions_core is defined as a source_set because it declares a
+# static function that it does not define.  This prevents it from linking as a
+# shared_library.  It also cannot be a static_library because it will be linked
+# into multiple shared libraries.  Revisit this setup if necessary.
+source_set("sessions_core") {
+  sources = [
+    "base_session_service.cc",
+    "base_session_service.h",
+    "base_session_service_commands.cc",
+    "base_session_service_commands.h",
+    "base_session_service_delegate.h",
+    "core/serialized_navigation_driver.h",
+    "serialized_navigation_entry.cc",
+    "serialized_navigation_entry.h",
+    "session_backend.cc",
+    "session_backend.h",
+    "session_command.cc",
+    "session_command.h",
+    "session_id.cc",
+    "session_id.h",
+    "session_service_commands.cc",
+    "session_service_commands.h",
+    "session_types.cc",
+    "session_types.h",
+  ]
+
+  defines = [ "SESSIONS_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+    "//skia",
+    "//sync",
+    "//third_party/protobuf:protobuf_lite",
+    "//ui/base",
+    "//ui/gfx",
+    "//url",
+  ]
+}
+
+source_set("test_support") {
+  testonly = true
+  sources = [
+    "serialized_navigation_entry_test_helper.cc",
+    "serialized_navigation_entry_test_helper.h",
+  ]
+
+  deps = [
+    ":sessions_core",
+    "//skia",
+    "//sync",
+    "//testing/gtest",
+  ]
+
+  if (!is_android && !is_ios) {
+    sources += [
+      "base_session_service_test_helper.cc",
+      "base_session_service_test_helper.h",
+    ]
+  }
+}
+
+if (!is_ios) {
+  component("sessions_content") {
+    sources = [
+      "content/content_serialized_navigation_builder.cc",
+      "content/content_serialized_navigation_builder.h",
+      "content/content_serialized_navigation_driver.cc",
+      "content/content_serialized_navigation_driver.h",
+    ]
+
+    defines = [ "SESSIONS_IMPLEMENTATION" ]
+
+    deps = [
+      ":sessions_core",
+      "//base",
+      "//base/third_party/dynamic_annotations",
+      "//content/public/browser",
+      "//ui/base",
+      "//url",
+    ]
+  }
+}
+
+if (!is_ios && !is_android) {
+  source_set("unit_tests") {
+    testonly = true
+    sources = [
+      "session_backend_unittest.cc",
+      "session_types_unittest.cc",
+    ]
+    deps = [
+      ":sessions_content",
+      "//base/test:test_support",
+      "//testing/gtest",
+      "//third_party/protobuf:protobuf_lite",
+    ]
+  }
+}
