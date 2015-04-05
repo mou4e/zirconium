@@ -792,7 +792,7 @@ bool PluginServiceImpl::NPAPIPluginsSupported() {
   static bool command_line_checked = false;
 
   if (!command_line_checked) {
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_BSD) || defined(OS_LINUX)
     const base::CommandLine* command_line =
         base::CommandLine::ForCurrentProcess();
     npapi_plugins_enabled_ = command_line->HasSwitch(switches::kEnableNpapi);
