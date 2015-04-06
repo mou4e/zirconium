@@ -1,5 +1,0 @@
-include_rules = [
-  "+media/base",
-  "+media/cdm",
-  "+media/renderers",
-]
