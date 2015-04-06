@@ -1,4 +1,0 @@
-include_rules = [
-  "+gpu",
-  "+third_party/mojo_services/src/gpu",
-]

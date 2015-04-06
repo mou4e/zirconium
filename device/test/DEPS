@@ -1,5 +1,0 @@
-include_rules = [
-  "+net/proxy",
-  "+net/url_request",
-  "+third_party/mojo/src/mojo/edk/embedder",
-]

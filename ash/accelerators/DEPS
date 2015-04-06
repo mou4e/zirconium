@@ -1,5 +1,0 @@
-specific_include_rules = {
-  "debug_commands\.cc": [
-    "+ash/host"
-  ],
-}
