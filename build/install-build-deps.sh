@@ -73,11 +73,11 @@ if ! which lsb_release > /dev/null; then
 fi
 
 lsb_release=$(lsb_release --codename --short)
-ubuntu_codenames="(precise|trusty|utopic)"
+ubuntu_codenames="(precise|trusty|utopic|rebecca)"
 if [ 0 -eq "${do_unsupported-0}" ] && [ 0 -eq "${do_quick_check-0}" ] ; then
   if [[ ! $lsb_release =~ $ubuntu_codenames ]]; then
-    echo "ERROR: Only Ubuntu 12.04 (precise), 14.04 (trusty) and " \
-        "14.10 (utopic) are currently supported" >&2
+    echo "ERROR: Only Ubuntu 12.04 (precise), 14.04 (trusty), " \
+        "14.10 (utopic) and Linux Mint 17 (rebecca) are currently supported" >&2
     exit 1
   fi
 
@@ -141,7 +141,7 @@ dbg_list="libatk1.0-dbg libc6-dbg libcairo2-dbg libfontconfig1-dbg
 # Find the proper version of libstdc++6-4.x-dbg.
 if [ "x$lsb_release" = "xprecise" ]; then
   dbg_list="${dbg_list} libstdc++6-4.6-dbg"
-elif [ "x$lsb_release" = "xtrusty" ]; then
+elif [ "x$lsb_release" = "xtrusty" ] || [ "x$lsb_release" = "xrebecca" ]; then
   dbg_list="${dbg_list} libstdc++6-4.8-dbg"
 else
   dbg_list="${dbg_list} libstdc++6-4.9-dbg"
@@ -156,7 +156,7 @@ arm_list="libc6-dev-armhf-cross
           g++-arm-linux-gnueabihf"
 
 # Work around for dependency issue Ubuntu/Trusty: http://crbug.com/435056
-if [ "x$lsb_release" = "xtrusty" ]; then
+if [ "x$lsb_release" = "xtrusty" ] || [ "x$lsb_release" = "xrebecca" ]; then
   arm_list+=" g++-4.8-multilib-arm-linux-gnueabihf
               gcc-4.8-multilib-arm-linux-gnueabihf"
 fi
